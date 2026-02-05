@@ -15,27 +15,27 @@ from gradio.themes import Soft
 from gradio.themes.utils import colors, fonts, sizes
 from typing import Iterable
 
-colors.steel_blue = colors.Color(
-    name="steel_blue",
-    c50="#EBF3F8",
-    c100="#D3E5F0",
-    c200="#A8CCE1",
-    c300="#7DB3D2",
-    c400="#529AC3",
-    c500="#4682B4",
-    c600="#3E72A0",
-    c700="#36638C",
-    c800="#2E5378",
-    c900="#264364",
-    c950="#1E3450",
+colors.dodger_blue = colors.Color(
+    name="dodger_blue",
+    c50="#F0F8FF",
+    c100="#E6F2FF",
+    c200="#B8D9FF",
+    c300="#8AC0FF",
+    c400="#5CA7FF",
+    c500="#1E90FF",
+    c600="#1A7FE6",
+    c700="#166ECC",
+    c800="#125DB3",
+    c900="#0E4C99",
+    c950="#0A3B80",
 )
 
-class SteelBlueTheme(Soft):
+class DodgerBlueTheme(Soft):
     def __init__(
         self,
         *,
         primary_hue: colors.Color | str = colors.gray,
-        secondary_hue: colors.Color | str = colors.steel_blue,
+        secondary_hue: colors.Color | str = colors.dodger_blue,
         neutral_hue: colors.Color | str = colors.slate,
         text_size: sizes.Size | str = sizes.text_lg,
         font: fonts.Font | str | Iterable[fonts.Font | str] = (
@@ -64,6 +64,12 @@ class SteelBlueTheme(Soft):
             button_primary_background_fill_hover="linear-gradient(90deg, *secondary_600, *secondary_700)",
             button_primary_background_fill_dark="linear-gradient(90deg, *secondary_600, *secondary_700)",
             button_primary_background_fill_hover_dark="linear-gradient(90deg, *secondary_500, *secondary_600)",
+            button_secondary_text_color="black",
+            button_secondary_text_color_hover="white",
+            button_secondary_background_fill="linear-gradient(90deg, *primary_300, *primary_300)",
+            button_secondary_background_fill_hover="linear-gradient(90deg, *primary_400, *primary_400)",
+            button_secondary_background_fill_dark="linear-gradient(90deg, *primary_500, *primary_600)",
+            button_secondary_background_fill_hover_dark="linear-gradient(90deg, *primary_500, *primary_500)",
             slider_color="*secondary_500",
             slider_color_dark="*secondary_600",
             block_title_text_weight="600",
@@ -75,13 +81,7 @@ class SteelBlueTheme(Soft):
             block_label_background_fill="*primary_200",
         )
 
-steel_blue_theme = SteelBlueTheme()
-
-css = """
-#main-title h1 {
-    font-size: 2.3em !important;
-}
-"""
+dodger_blue_theme = DodgerBlueTheme()
 
 MODEL_NAME = 'deepseek-ai/DeepSeek-OCR-2'
 
@@ -282,6 +282,303 @@ def select_boxes(task):
         return gr.update(selected="tab_boxes")
     return gr.update()
 
+
+css = """
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+/* Background grid pattern - Dodger Blue theme */
+body, .gradio-container {
+    background-color: #F0F8FF !important;
+    background-image: 
+        linear-gradient(#B8D9FF 1px, transparent 1px), 
+        linear-gradient(90deg, #B8D9FF 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* Dark mode grid */
+.dark body, .dark .gradio-container {
+    background-color: #1a1a1a !important;
+    background-image: 
+        linear-gradient(rgba(30, 144, 255, 0.1) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(30, 144, 255, 0.1) 1px, transparent 1px) !important;
+    background-size: 40px 40px !important;
+}
+
+#col-container {
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+/* Main title styling */
+#main-title {
+    text-align: center !important;
+    padding: 1rem 0 0.5rem 0;
+}
+
+#main-title h1 {
+    font-size: 2.5em !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, #1E90FF 0%, #5CA7FF 50%, #1A7FE6 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 4s ease infinite;
+    letter-spacing: -0.02em;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Subtitle styling */
+#subtitle {
+    text-align: center !important;
+    margin-bottom: 1.5rem;
+}
+
+#subtitle p {
+    margin: 0 auto;
+    color: #666666;
+    font-size: 1rem;
+}
+
+#subtitle a {
+    color: #1E90FF !important;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#subtitle a:hover {
+    text-decoration: underline;
+}
+
+/* Card styling */
+.gradio-group {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 2px solid #B8D9FF !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(30, 144, 255, 0.08) !important;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.gradio-group:hover {
+    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.12) !important;
+    border-color: #5CA7FF !important;
+}
+
+.dark .gradio-group {
+    background: rgba(30, 30, 30, 0.9) !important;
+    border-color: rgba(30, 144, 255, 0.3) !important;
+}
+
+/* Image upload area */
+.gradio-image {
+    border-radius: 10px !important;
+    overflow: hidden;
+    border: 2px dashed #5CA7FF !important;
+    transition: all 0.3s ease;
+}
+
+.gradio-image:hover {
+    border-color: #1E90FF !important;
+    background: rgba(30, 144, 255, 0.02) !important;
+}
+
+/* Radio buttons */
+.gradio-radio {
+    border-radius: 8px !important;
+}
+
+.gradio-radio label {
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid transparent !important;
+}
+
+.gradio-radio label:hover {
+    background: rgba(30, 144, 255, 0.05) !important;
+}
+
+.gradio-radio label.selected {
+    background: rgba(30, 144, 255, 0.1) !important;
+    border-color: #1E90FF !important;
+}
+
+/* Primary button */
+.primary {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    transition: all 0.3s ease !important;
+}
+
+.primary:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* Tabs styling */
+.tab-nav {
+    border-bottom: 2px solid #B8D9FF !important;
+}
+
+.tab-nav button {
+    font-weight: 500 !important;
+    padding: 10px 18px !important;
+    border-radius: 8px 8px 0 0 !important;
+    transition: all 0.2s ease !important;
+}
+
+.tab-nav button.selected {
+    background: rgba(30, 144, 255, 0.1) !important;
+    border-bottom: 2px solid #1E90FF !important;
+}
+
+/* Output textbox */
+.gradio-textbox textarea {
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid #B8D9FF !important;
+    border-radius: 8px !important;
+}
+
+.dark .gradio-textbox textarea {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-color: rgba(30, 144, 255, 0.2) !important;
+}
+
+/* Markdown output */
+.gradio-markdown {
+    font-family: 'Outfit', sans-serif !important;
+    line-height: 1.7 !important;
+}
+
+.gradio-markdown code {
+    font-family: 'IBM Plex Mono', monospace !important;
+    background: rgba(30, 144, 255, 0.08) !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    color: #166ECC !important;
+}
+
+.gradio-markdown pre {
+    background: rgba(30, 144, 255, 0.05) !important;
+    border: 1px solid #B8D9FF !important;
+    border-radius: 8px !important;
+    padding: 1rem !important;
+}
+
+/* Examples section */
+.gradio-examples {
+    border-radius: 10px !important;
+}
+
+.gradio-examples .gallery-item {
+    border: 2px solid #B8D9FF !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.gradio-examples .gallery-item:hover {
+    border-color: #1E90FF !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.15) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 144, 255, 0.05);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1E90FF, #5CA7FF);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #1A7FE6, #1E90FF);
+}
+
+/* Accordion styling */
+.gradio-accordion {
+    border-radius: 10px !important;
+    border: 1px solid #B8D9FF !important;
+}
+
+.gradio-accordion > .label-wrap {
+    background: rgba(30, 144, 255, 0.03) !important;
+    border-radius: 10px !important;
+}
+
+/* Hide footer */
+footer {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.gradio-row {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Label styling */
+label {
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.dark label {
+    color: #eee !important;
+}
+
+/* Dropdown styling */
+.gradio-dropdown {
+    border-radius: 8px !important;
+}
+
+.gradio-dropdown select, .gradio-dropdown input {
+    border: 1px solid #B8D9FF !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.gradio-dropdown select:focus, .gradio-dropdown input:focus {
+    border-color: #1E90FF !important;
+    box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.1) !important;
+}
+
+/* Gallery styling */
+.gradio-gallery {
+    border-radius: 10px !important;
+}
+
+.gradio-gallery .gallery-item {
+    border: 2px solid #B8D9FF !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.gradio-gallery .gallery-item:hover {
+    border-color: #1E90FF !important;
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.15) !important;
+}
+"""
+
 with gr.Blocks() as demo:
     gr.Markdown("# DeepSeek-OCR-2", elem_id="main-title")
     
@@ -325,4 +622,4 @@ with gr.Blocks() as demo:
     submit_event.then(select_boxes, [task], [tabs])
 
 if __name__ == "__main__":
-    demo.queue(max_size=50).launch(theme=steel_blue_theme, css=css, mcp_server=True, ssr_mode=False, show_error=True)
+    demo.queue(max_size=50).launch(theme=dodger_blue_theme, css=css, mcp_server=True, ssr_mode=False, show_error=True)
